@@ -1,0 +1,34 @@
+
+body{ 
+	margin: 0;
+	padding: 0;
+}
+
+.swfbox-back{
+	display: block;
+	position: absolute;
+	left: 0%;
+	width: 100%;
+	background-color: black;
+	z-index:5001;
+	-moz-opacity: 0.8;
+	opacity:.80;
+	filter: alpha(opacity=80);
+}
+
+.swfbox-container{
+	display: block;
+	position: absolute;
+	left: 0%;
+	width: 100%;
+	z-index:5002;
+	overflow: visible;
+	text-align: center;
+}
+ 
+.swfbox-content{
+	position: absolute;
+	left: 0%;
+	width: 100%;
+	z-index:5004;
+}
