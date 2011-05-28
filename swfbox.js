@@ -47,12 +47,17 @@ function createSWFbox( swfName, swfWidth, swfHeight, swfBackground, swfURL ) {
 							// fix a bug with Safari that passes the onclick event hierarchically inside the flash object 
 							if( userAgent.indexOf('safari')!=-1 ) {
 								if( e.target.className == 'swfbox-flash' ) return;
-									hideSWFbox(swfName);
+								hideSWFbox(swfName);
 							} else {
-									hideSWFbox(swfName);
+								hideSWFbox(swfName);
 							}
 					}
-	window.onscroll = function() { window.onscroll = null; hideSWFbox(swfName); }
+	window.onscroll = function() { 
+							window.onscroll = null; 
+							if (document.getElementById(swfName)) { 
+								hideSWFbox(swfName); 
+							} 
+					}
 }
 
 function positionSWFbox( swfName, swfWidth, swfHeight ) {
