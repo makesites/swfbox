@@ -7,36 +7,10 @@
 
 <script type="text/javascript" src="../swfbox.js"></script>
 
-<!-- Optionally you can use the SWFobject class for the flash code -->
-<!-- Homepage: http://blog.deconcept.com/swfobject/ -->
-<script type="text/javascript" src="../swfobject.js"></script>
-
 </head>
 <body>
-	
 
-This is the main content. To display the swfbox click <a href="javascript:swfboxShow('600','600','swfbox001');">here</a></p>
-
-<!-- Start SWFbox -->
-<div id="swfbox001" style="display: none;">
-<div class="swfbox-container">
-<div id="swfobject" class="swfbox-content">
-<p class="noplugin"><a title="http://www.adobe.com/go/getflashplayer" href="http://www.adobe.com/go/getflashplayer" target="_blank"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" align="left" width="88" height="31" alt="Get Adobe Flash Player" border="0" /></a>This item requires the latest version of Adobe's Flash Player.
-Please download it from <a href="http://www.adobe.com/go/getflashplayer" target="_blank">www.adobe.com/go/getflashplayer</a> and refresh this page once installation is complete.</p>
-</div>
-<script type="text/javascript">
-	// <![CDATA[
-	var so = new SWFObject("example.swf", "swfobject", "600", "600", "9", "#FF6600");
-	so.write("swfobject");
-	// ]]>
-</script>
-
-</div>
-<div class="swfbox-back"></div>
-<script type="text/javascript">hideActions('swfbox001');</script>
-</div>
-<!-- END SWFbox -->
-
+This is the main content. To display the SWFbox <a href="example.swf" onclick="SWFbox('swfbox001','640','480','#99CCFF', this.href); return false;">click here</a></p>
 
 </body>
 </html>
