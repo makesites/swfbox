@@ -9,18 +9,30 @@ function SWFbox( swfName, swfWidth, swfHeight, swfBackground, swfURL ) {
 }
 
 function createSWFbox( swfName, swfWidth, swfHeight, swfBackground, swfURL ) {
-	//global swfName, swfWidth, swfHeight, swfBackground;
-	
+	// get basic browser properties 
 	var pageBody = document.getElementsByTagName("body").item(0);
+	var userAgent = navigator.userAgent.toLowerCase();
+
+	// start creating the div structure 
 	var SWFbox = document.createElement("div");
 	SWFbox.setAttribute('id',swfName);
-	SWFbox.style.display = 'none';
+	SWFbox.className = 'swfbox';
 	pageBody.appendChild(SWFbox);
-	
+
 	var SWFbox_back = document.createElement("div");
 	SWFbox_back.className = 'swfbox-back';
+	// fix a bug with flickering flash over opacity on the firefox for Mac 
+	if ( userAgent.indexOf('mac') != -1 && userAgent.indexOf('firefox')!=-1 ) {
+		SWFbox_back.style.backgroundImage= "url(http://i221.photobucket.com/albums/dd128/kdiweb/swfbox_back.png)";
+		SWFbox_back.style.backgroundRepeat="repeat";
+	} else {
+		SWFbox_back.style.backgroundColor = "#000";
+		SWFbox_back.style.MozOpacity = 0.8;
+		SWFbox_back.style.opacity = .80;
+		SWFbox_back.style.filter = "alpha(opacity=80)";
+	}
 	SWFbox.appendChild(SWFbox_back);
-	
+
 	var SWFbox_container = document.createElement("div");
 	SWFbox_container.className = 'swfbox-container';
 	SWFbox.appendChild(SWFbox_container);
@@ -29,11 +41,18 @@ function createSWFbox( swfName, swfWidth, swfHeight, swfBackground, swfURL ) {
 	SWFbox_content.className = 'swfbox-content';
 	SWFbox_container.appendChild(SWFbox_content);
 	
-	SWFbox_content.innerHTML = '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="'+swfWidth+'" height="'+swfHeight+'" id="'+swfName+'-flash" align="middle"><param name="allowScriptAccess" value="sameDomain" /><param name="movie" value="'+swfURL+'" /><param name="quality" value="high" /><param name="bgcolor" value="'+swfBackground+'" /><embed src="'+swfURL+'" quality="high" bgcolor="'+swfBackground+'" width="'+swfWidth+'" height="'+swfHeight+'" name="'+swfName+'-flash" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" /></object>';
+	SWFbox_content.innerHTML = '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="'+swfWidth+'" height="'+swfHeight+'" id="'+swfName+'-flash" class="swfbox-flash"><param name="allowScriptAccess" value="sameDomain" /><param name="movie" value="'+swfURL+'" /><param name="quality" value="high" /><param name="bgcolor" value="'+swfBackground+'" /><embed src="'+swfURL+'" quality="high" bgcolor="'+swfBackground+'" width="'+swfWidth+'" height="'+swfHeight+'" name="'+swfName+'-flash" class="swfbox-flash" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" /></object>';
 
-	SWFbox.onclick = function() { hideSWFbox(swfName); }
+	SWFbox.onclick = function(e){
+							// fix a bug with Safari that passes the onclick event hierarchically inside the flash object 
+							if( userAgent.indexOf('safari')!=-1 ) {
+								if( e.target.className == 'swfbox-flash' ) return;
+									hideSWFbox(swfName);
+							} else {
+									hideSWFbox(swfName);
+							}
+					}
 	window.onscroll = function() { window.onscroll = null; hideSWFbox(swfName); }
-
 }
 
 function positionSWFbox( swfName, swfWidth, swfHeight ) {
